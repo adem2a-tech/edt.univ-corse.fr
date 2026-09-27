@@ -3,7 +3,10 @@
   moment.locale("fr");
 
   try {
-    history.replaceState(null, "", "/?vt=agendaWeek&dt=2026-10-05&et=group&fid0=L1ST");
+    // Rester sous /edt/ pour que events.js / celcat.js restent valides au refresh
+    var underEdt = /\/edt(\/|$)/i.test(location.pathname);
+    var qs = "?vt=agendaWeek&dt=2026-10-05&et=group&fid0=L1ST";
+    history.replaceState(null, "", underEdt ? "/edt/" + qs : qs);
   } catch (e) {}
 
   var MOBILE_BP = 768;

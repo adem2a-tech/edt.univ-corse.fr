@@ -1,311 +1,1307 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CELCAT Calendar</title>
-  <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://edt.univ-corse.fr/css/bundle1.min.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin-ext" />
-  <link rel="stylesheet" href="https://edt.univ-corse.fr/css/homepageBundle.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-theme@0.1.0-beta.10/dist/select2-bootstrap.min.css" />
-  <style>
-    .fc-event.cat-blue { background-color:#0000FF !important; border-color:rgb(1,42,54) !important; color:#fff !important; }
-    .fc-event.cat-orange { background-color:#FF8040 !important; border-color:rgb(1,42,54) !important; color:#000 !important; }
-    .fc-event.cat-black { background-color:#000A0A !important; border-color:#000 !important; color:#fff !important; }
-    #calendar.calendardiv { margin-top: 1em; }
+<html><head>
 
-    /* ——— Mobile = comportement Celcat ——— */
-    @media (max-width: 767px) {
-      body { padding-top: 50px; padding-bottom: 12px; overflow-x: hidden; }
-      .navbar-inverse .navbar-brand { margin-top: -8px; }
-      .navbar-inverse .navbar-brand img { height: 36px; }
-      .navbar-toggle {
-        display: block !important;
-        float: right;
-        margin-right: 10px;
-        border-color: #78B99B;
-        background-color: #78B99B;
-      }
-      .navbar-toggle .icon-bar { background: #fff; }
-      .navbar-collapse {
-        display: none !important;
-        border-top: 1px solid #1a3328;
-        background: #234435;
-        max-height: none;
-      }
-      .navbar-collapse.in { display: block !important; }
-      .navbar-nav { margin: 0; }
-      .navbar-nav > li > a { color: #e6e6e6 !important; padding: 12px 16px; }
-      .navbar-right { float: none !important; }
+<link rel="shortcut icon" href="https://portailweb.universita.corsica/template/template_back_office/images/favicon.ico" type="image/x-icon">
+<meta name="author" lang="fr" content="Service Communication">
+<title>Campus numérique | Università di Corsica Pasquale Paoli - Université de Corse Pasquale Paoli</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://portailweb.universita.corsica/template/template_back_office/css/google-fonts.css" rel="stylesheet" type="text/css">
+<link href="https://portailweb.universita.corsica/template/template_back_office/css/style_portailweb.php" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="https://portailweb.universita.corsica/template/template_back_office/css/animate.css" media="screen">
+<link rel="stylesheet" type="text/css" href="https://portailweb.universita.corsica/template/template_back_office/css/flexslider.css" media="screen">
+<link rel="stylesheet" type="text/css" href="fontawesome/css/all.css" media="screen">
+<link rel="stylesheet" type="text/css" href="portal-extras.css" media="screen">
+    
 
-      #mainContentDiv.body-content {
-        padding-left: 8px !important;
-        padding-right: 8px !important;
-        margin-left: 0 !important;
-      }
-      #sidebarOutBtnDiv { left: 0; top: 70px; }
-      #calendarSidebar.sidebar {
-        width: 100% !important;
-        z-index: 200;
-        padding-top: 50px;
-      }
-      #calendarSidebar .sidebarPanel {
-        width: auto !important;
-        margin: 8px;
-        height: calc(100% - 16px);
-      }
+	
 
-      #calBrowseBarDiv { margin-top: 8px; }
-      #calBrowseBarDiv .panel-title {
-        width: 85%;
-        font-size: 13px;
-      }
-      #calBrowseBarDiv .col-sm-2,
-      #calBrowseBarDiv .col-sm-10,
-      #calBrowseBarDiv .col-md-2,
-      #calBrowseBarDiv .col-md-10 {
-        width: 100%;
-        float: none;
-        padding-left: 0;
-        padding-right: 0;
-      }
-      #calBrowseBarDiv .form-group { margin-bottom: 10px; }
+<script type="text/javascript" src="https://portailweb.universita.corsica/template/template_back_office/js/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="https://portailweb.universita.corsica/template/template_back_office/js/jquery-scrollbar.js"></script>
+<script type="text/javascript" src="https://portailweb.universita.corsica/template/template_back_office/js/jquery-migrate-1.4.1.min.js"></script>
+<script type="text/javascript" src="https://portailweb.universita.corsica/template/template_back_office/js/jquery.flexslider-min.js"></script>
+<script type="text/javascript" src="https://portailweb.universita.corsica/template/template_back_office/js/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://portailweb.universita.corsica/template/template_back_office/js/jquery-ui.css">
 
-      .fc-toolbar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .fc-toolbar .fc-left,
-      .fc-toolbar .fc-center,
-      .fc-toolbar .fc-right {
-        float: none !important;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 4px;
-      }
-      .fc-toolbar .fc-center { order: 3; width: 100%; justify-content: center; padding-top: 2px; }
-      .fc-toolbar .fc-center h2 { font-size: 16px !important; }
-      .fc-button { font-size: 12px !important; padding: 0 0.45em !important; }
 
-      #ctColourKey .colorKeyItem {
-        width: auto;
-        min-width: 4.5em;
-        margin-bottom: 4px;
-        padding: 0.35em 0.6em;
-      }
-      footer.small .col-xs-6 { width: 100%; text-align: left !important; margin-bottom: 6px; }
-    }
-  </style>
-</head>
-<body>
+    
 
-<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #234435">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse" style="background-color: #78B99B">
-        <span class="sr-only">Activer/désactiver navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">
-        <img src="images/logo-celcat.png" srcset="images/logo-celcat.svg" alt="" />
-      </a>
-    </div>
-    <div class="navbar-collapse collapse" id="main-navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li><a href="#">Accueil</a></li>
-        <li><a class="adminPageLink" href="#">Admin</a></li>
-        <li class="navbar-link"><a id="monthPicker">Sélecteur de dates</a></li>
-        <li class="navbar-link"><a id="eventFilter">Filtre d’événements</a></li>
-        <li class="navbar-link"><a id="shareCalendar">Partager</a></li>
-        <li class="navbar-link"><a href="#">Aide</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a class="logInOrOut" href="#">
-            <i class="fa fa-user" aria-hidden="true"></i>
-            <span>Déconnexion</span>
-            <span class="small">- 20261655</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
+
+<script type="text/javascript">
+//$("#load").hide();
+function optionCheck(){
+	//$("#load").show();
+	var id_site = document.getElementById("site").value;
+	window.location = "https://portailweb.universita.corsica/outils_de_ce_site.php?id_site="+id_site;
+	//$("#load").hide();	
+           
+    }	
+</script>
+	<script type="text/javascript" src="https://portailweb.universita.corsica/js/jquery.nyroModal.custom.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+	  $('.nyroModal').nyroModal(); 
+	});
+</script>
+  </head>
+  
+  
+  <body>
+<header role="banner">
+		<div class="search_form" style="height: 0px;">
+			<div class="container">
+				<form role="search" action="" class="" method="post">
+					<i class="far fa-search"></i>
+					<label data-cursor-ref="e44"><input type="text" placeholder="Rechercher sur ce site" title="Rechercher sur ce site" name="s" class="qode_search_field" autocomplete="off" data-cursor-ref="e0"><span class="visually-hidden">Rechercher sur ce site</span></label>
+					<input type="submit" value="Rechercher">
+					
+					
+				</form>
+			</div>
+		</div>
+		
+		<div class="top_header">
+			<div class="container">
+				<div class="pull-left">
+					<div class="menu_top_header">
+						<span><a href="https://www.universita.corsica/" class="hidden_md" data-cursor-ref="e1">Università di corsica</a><span class="hidden_md">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><label for="nosportails_menu" class="nosportails" data-cursor-ref="e45">Nos portails &nbsp;&nbsp;:</label></span>
+						<input type="checkbox" id="nosportails_menu">
+						<ul>
+							<li data-cursor-ref="e46"><a href="https://studia.universita.corsica" data-cursor-ref="e2">Etudiants</a></li>
+                       	<li data-cursor-ref="e47"><a href="https://portailweb.universita.corsica" data-cursor-ref="e3">Personnels</a></li>
+                        <li data-cursor-ref="e48"><a href="https://ricerca.universita.corsica" data-cursor-ref="e4">Recherche</a></li>
+                         <!--<li><a href="https://pro.universita.corsica">Partenaires pro</a></li>-->
+						<li data-cursor-ref="e49"><a href="http://fundazione.universita.corsica" data-cursor-ref="e5">Fondation</a></li>              
+						</ul>
+					</div>
+				</div>
+				<div class="pull-right">
+                <!--<div class="pull-left">
+					<a href="#" class="btn_search" id="btn_search"><i class="fa fa-search fa-1x" title="Recherche"></i><span class="visually-hidden">Rechercher sur ce site</span></a>
+                    	&nbsp;
+                    </div>-->
+                    <div class="menu_connexion_menu"> 
+                          <span><label for="connexion_menu" class="connexion" data-cursor-ref="e50">|&nbsp;&nbsp;&nbsp;ADEM&nbsp;&nbsp;<i class="fa fa-user fa-1x" style="color:#00d40a"></i></label></span>
+						<input type="checkbox" id="connexion_menu">
+<ul class="animated slideInDown connexion_visible">
+  <li data-cursor-ref="e51"><a href="https://portailweb.universita.corsica/index.php">Mes outils&nbsp;&nbsp;<i class="fa fa-cubes fa-1x"></i></a></li>
+        <li data-cursor-ref="e52"><a href="https://applisweb.universita.corsica/portail/tous_mes_outils/settings.php?id_site=0&amp;acces=portail&amp;profil=admin">Mon compte&nbsp;&nbsp;<i class="fal fa-cog fa-1x"></i></a></li>
+  <li data-cursor-ref="e53"><a href="https://portailweb.universita.corsica/plugins/auth/logout.php?username=braaah2i&amp;id_site=0">Se déconnecter&nbsp;&nbsp;<i class="fa fa-sign-out fa-1x"></i></a></li>
+
+</ul>
+
+					
+                                     
+   
+                
+			</div>
+            </div>
+			</div>
+		</div>     
+        
+        
+        
+        
+	
+	
+ 
+ 
+ 
+ 	<div class="bottom_header">
+					
+			<div class="container">
+           
+			<a href="https://portailweb.universita.corsica/" class="logo" data-cursor-ref="e6"><img src="images/logo.png" alt="logo"></a>
+<style type="text/css">
+header .bottom_header .baseline {
+font-size:3em;	
+}
+@media only screen and (max-width: 620px) {
+header .bottom_header .baseline {
+font-size:1.5em;	
+}	
+}
+</style>
+		
+<div class="baseline">
+
+&nbsp;|&nbsp;<span>Campus Numérique</span>
+</div></div>
+ </div>
+
+<div class="navigation ">
+<nav class="container">
+				<input type="checkbox" id="input_menu_toggle">
+				<label for="input_menu_toggle" class="btn_menu_smart show_md"><i class="fa fa-bars"></i><span class="visually-hidden">Menu</span></label>
+				<ul class="niv1"> 
+                    
+<li data-cursor-ref="e54"><a href="https://portailweb.universita.corsica/index.php" class="menugeneral_item" data-cursor-ref="e7"><div style="background-color: #000000;color:#ffffff;padding-left:7px;padding-right:7px;padding-top:4px;"><i class="fa fa-cubes fa-1x" title="Tous mes outils"></i> Mes outils</div></a></li>
+<li data-cursor-ref="e55"><a href="https://cours.universita.corsica/index.php" class="menugeneral_item" data-cursor-ref="e8"><div style="background-color: #9a9a9a;color:#ffffff;padding-left:7px;padding-right:7px;padding-top:4px;"><i class="fal fa-desktop fa-1x" title="Tous mes cours"></i> Cours en ligne</div></a></li>
+					
+<li data-cursor-ref="e56"><a href="https://podcast.universita.corsica/index.php" class="menugeneral_item" data-cursor-ref="e9"><div style="background-color: #9a9a9a;color:#ffffff;padding-left:7px;padding-right:7px;padding-top:4px;"><i class="fa fa-podcast fa-1x" title="Tous mes podcasts"></i> Podcasts</div></a></li>					
+<li data-cursor-ref="e57"><a href="https://portailweb.universita.corsica/listing_sites_web.php" class="menugeneral_item" data-cursor-ref="e10"><div style="background-color: #000000;color:#ffffff;padding-left:7px;padding-right:7px;padding-top:4px;"><i class="fa fa-sitemap fa-1x" title="Nos sites web"></i> Nos sites web</div></a></li>
+                    
+                       
+
+   
+</ul>
 </nav>
+ </div>
+  <div id="progress-bar" style="background-color: rgb(255, 85, 34); height: 5px; position: fixed;"></div>
+	</header>
+<!-- <div id="load"></div>-->
 
-<div id="mainContentDiv" class="container-fluid body-content" style="min-width: 355px; margin-left: 0px;">
 
-  <div id="calendarSidebar" class="sidebar" hidden="hidden" style="display: none; width: 0px;">
-    <div class="panel sidebarPanel" style="width: 336px;">
-      <div id="sidebarInBtnDiv" style="left: 324px; top: 84px; display: none;">
-        <button class="btn btn-info" type="button" id="sidebarToggleBtn">
-          <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div class="sidebarTitleDiv">
-        <h2><span id="sidebarEventTitle">Événement</span></h2>
-      </div>
-      <div id="sidebarEventContentDiv">(aucun sélectionné)</div>
-      <div class="sidebarTitleDiv">
-        <h2><span id="sidebarRecordsTitle">Groupe</span></h2>
-      </div>
-      <div id="sidebarResourceContentDiv">
-        <div class="sidebarResItemDiv" style="border-color: #DAEAE3;background-color: #EFF7F4">
-          <div class="sideBarItemTitle" style="background-color: #DAEAE3">
-            <span class="resNav"><strong>L1ST (Licence 1 Sciences et Technologies)</strong></span>
-          </div>
-          <div class="sideBarItemContent">
-            <strong>Département:</strong> <span>CST</span><br>
-            <strong>Url:</strong> <span></span><br>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div id="sidebarOutBtnDiv" style="top: 84px; display: block;">
-    <button class="btn btn-info" type="button" id="sidebarOpenBtn">
-      <i class="fa fa-chevron-right" aria-hidden="true"></i>
-    </button>
-  </div>
 
-  <div class="panel panel-default" id="calBrowseBarDiv">
-    <div class="panel-heading" role="tab" id="browsePanel" data-toggle="collapse" href="#browseBody" aria-expanded="true" aria-controls="browseBody" style="cursor:pointer">
-      <div id="browseBtn" class="pull-right" type="button" data-toggle="collapse" href="#browseBody" aria-expanded="true" aria-controls="browseBody">
-        <i class="fa fa-chevron-up" aria-hidden="true"></i>
-      </div>
-      <h4 class="panel-title" id="browsePanelTitle">
-        <small><span class="badge resCountBadge"></span></small>
-        <span class="panelBtnTitle">L1ST (Licence 1 Sciences et Technologies)</span>
-      </h4>
-    </div>
-    <div id="browseBody" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="browsePanel" aria-expanded="true">
-      <div class="panel-body">
-        <form method="post" onsubmit="return false;">
-          <div class="col-sm-2 col-md-2">
-            <div class="form-group">
-              <label class="control-label" for="resourceTypeSelectList">Type</label><br>
-              <select class="form-control select2-hidden-accessible" id="resourceTypeSelectList" style="width: 100%" tabindex="-1" aria-hidden="true">
-                <option value="100">Matières</option>
-                <option value="102">Salles</option>
-                <option value="103" selected>Groupes</option>
-              </select>
-              <span class="select2 select2-container select2-container--bootstrap" dir="ltr" style="width: 100%;">
-                <span class="selection">
-                  <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0">
-                    <span class="select2-selection__rendered" id="select2-resourceTypeSelectList-container" title="Groupes">Groupes</span>
-                    <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
-                  </span>
-                </span>
-                <span class="dropdown-wrapper" aria-hidden="true"></span>
-              </span>
-            </div>
-          </div>
-          <div class="col-sm-2 col-md-2" id="secondaryFiltersId" style="display: none;">
-            <div class="form-group" id="resFilters">
-              <label class="control-label" for="resFilter1">Filtres</label>
-            </div>
-          </div>
-          <div class="col-sm-10 col-md-10" id="mainResBrowseDiv">
-            <div class="form-group">
-              <label class="control-label" for="resourceSelectList">Ressource(s)</label><br>
-              <select class="form-control select2-hidden-accessible" id="resourceSelectList" multiple style="width: 100%" tabindex="-1" aria-hidden="true">
-                <option value="L1ST" selected>L1ST (Licence 1 Sciences et Technologies)</option>
-              </select>
-              <span class="select2 select2-container select2-container--bootstrap" dir="ltr" style="width: 100%;">
-                <span class="selection">
-                  <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1">
-                    <ul class="select2-selection__rendered">
-                      <span class="select2-selection__clear">×</span>
-                      <li class="select2-selection__choice" title="L1ST (Licence 1 Sciences et Technologies)">
-                        <span class="select2-selection__choice__remove" role="presentation">×</span>L1ST (Licence 1…
-                      </li>
-                      <li class="select2-search select2-search--inline">
-                        <input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;">
-                      </li>
-                    </ul>
-                  </span>
-                </span>
-                <span class="dropdown-wrapper" aria-hidden="true"></span>
-              </span>
-              <div id="myResCheckBoxDiv">
-                <label>
-                  <div class="icheckbox_square" style="position: relative;">
-                    <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0; padding: 0; background: rgb(255, 255, 255); border: 0; opacity: 0;">
-                    <ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0; padding: 0; background: rgb(255, 255, 255); border: 0; opacity: 0;"></ins>
-                  </div>
-                  <span class="myResSpan">Mes ressources</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+        
+    <style>
+/* The actual popup (appears on top) */
+.popuptext {
+   display: none;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 9;
+}
 
-  <div id="calendar" class="calendardiv"></div>
+/* Popup arrow */
+.popuptext::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color:  transparent  transparent #555  transparent;
+}
 
-  <div id="ctColourKey">
-    <div class="panel panel-info colorKey small">
-      <div class="panel-body">
-        <div class="dropdown dropup">
-          <a class="dropdown-toggle" id="colorKeyTitle" role="button" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="colorKeyTitleText">Code des couleurs - Catégorie d’événement</span>
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="colorKeyTitle">
-            <li><a class="schemeMenuItem" href="#">Département</a></li>
-            <li><a class="schemeMenuItem" href="#">Faculté</a></li>
-            <li><a class="schemeMenuItem" href="#">Catégorie d’événement</a></li>
-            <li><a class="schemeMenuItem" href="#">État du registre</a></li>
-            <li><a class="schemeMenuItem" href="#">Site</a></li>
-            <li><a class="schemeMenuItem" href="#">Matière</a></li>
-            <li><a class="schemeMenuItem" href="#">Marque de registre</a></li>
-          </ul>
-        </div>
-        <div class="colours">
-          <span class="colorKeyItem" style="background-color:#0000FF;color:#ffffff;cursor:pointer" title="TD">TD</span>
-          <span class="colorKeyItem" style="background-color:#FF8040;color:#000000;cursor:pointer" title="Cours">Cours</span>
-        </div>
-      </div>
-    </div>
-  </div>
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
 
-  <hr>
-  <footer class="small">
-    <div class="row">
-      <div class="col-xs-6 hidden-xs hidden-print">
-        <p>© 2026 - CELCAT Calendar <span class="small">(v9.0.6802.2502)</span></p>
-      </div>
-      <div class="col-xs-6 text-right">
-        <div class="hidden-print">
-          <span class="hidden-sm hidden-xs">Langue</span>
-          <select>
-            <option value="en-GB">English (United Kingdom)</option>
-            <option value="en-US">English (United States)</option>
-            <option selected value="fr-FR">French (France)</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </footer>
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+</style>
+<script>
+$(document).ready( function() {
+    $('.clickme').on('click', function(e) { 
+			$('.popuptext').css('display','block');
+           $('.popuptext').offset({ top: e.pageY+40, left:  e.pageX-70}).fadeIn(); 
+    });
+	$('.hideme').on('click', function(e) { 
+           $('.popuptext').css('display','none');
+    });
+    var parents = document.querySelectorAll('.tousmesoutils_appli');
+    parents.forEach(function(item){if(isOverflown(item)){
+	   	item.classList.add("enq");}
+	});
+    
+});
+</script>
+<div class="container_main_auto">
+	<div class="container_main">
+	
+
+
+
+<div id="pluginbomenu">
+	<br><div class="mes_outils">
+		<div class="outils">
+			<div class="vc_text_separator full ">
+				<div class="separator_wrapper">
+					<div class="separator_content">
+						<span class="tousmesoutils_titresection">Salute ADEM SDIRI</span>
+					</div>
+				</div>
+				<div class="separator_line"></div>
+			</div>
+			<div class="bloc1">
+	
+				<div id="outils_picto" class="outils_picto ui-sortable ui-sortable-disabled">
+										            <a id="braaah2i010" uid="braaah2i" id_plugin="0" id_outil="1" id_appli="0" class="picto" draggable="false" target="_blank">
+					            	<i class="fas fa-times deletIco curseurMain" onclick="suppression('braaah2i', 0, 1, 0)"></i>
+					            	<br>
+					            	<i class="fal fa-at fa-3x fa-3x curseurMain" onclick="onClickLiens('https://login.microsoftonline.com/login.srf?wa=wsignin1.0&amp;whr=universita.corsica&amp;wreply=https://portal.microsoftonline.com',  1)" alt="Office 365"></i>
+					            	<br>
+					            	<span class="curseurMain" onclick="onClickLiens('https://login.microsoftonline.com/login.srf?wa=wsignin1.0&amp;whr=universita.corsica&amp;wreply=https://portal.microsoftonline.com',  1)">Office 365</span>
+					            </a>  
+					            					            <a id="braaah2i080" class="picto" href="edt/index.html" target="_self">
+					            	<i class="fas fa-times deletIco curseurMain" onclick="suppression('braaah2i', 0, 8, 0)"></i>
+					            	<br>
+					            	<i class="fal fa-clock fa-3x fa-3x curseurMain" alt="Emploi du temps"></i>
+					            	<br>
+					            	<span class="curseurMain">Emploi du temps</span>
+					            </a>  
+						<div class="popuptext" style="">
+							
+								
+							<a href="edt/index.html" target="_self" class="hideme" style="display: block; color: #FFFFFF"><i class="fal fa-clock fa-2x" alt="Accueil EDT"></i><br>Accueil EDT
+								</a>&nbsp;
+					</div>
+					            					            <a id="braaah2i090" uid="braaah2i" id_plugin="0" id_outil="9" id_appli="0" class="picto" draggable="false">
+					            	<i class="fas fa-times deletIco curseurMain" onclick="suppression('braaah2i', 0, 9, 0)"></i>
+					            	<br>
+					            	<i class="fal fa-desktop fa-3x curseurMain" onclick="onClickLiens('https://cours.universita.corsica',  0)" alt="Cours en ligne"></i>
+					            	<br>
+					            	<span class="curseurMain" onclick="onClickLiens('https://cours.universita.corsica',  0)">Cours en ligne</span>
+					            </a>  
+					            						<a oncontextmenu="return false" href="template/modules_accueil/mes_outils/ajouter_favoris.php" class="picto nyroModal" style="padding-top: 25px; padding-bottom: 25px;" draggable="false" data-cursor-ref="e11">
+							<i class="fal fa-plus-square fa-3x curseurMain" alt="Cours en ligne"></i>
+						</a>
+											<a oncontextmenu="return false" href="template/modules_accueil/mes_outils/ajouter_favoris.php" class="picto nyroModal" style="padding-top: 25px; padding-bottom: 25px;" draggable="false" data-cursor-ref="e12">
+							<i class="fal fa-plus-square fa-3x curseurMain" alt="Cours en ligne"></i>
+						</a>
+											<a oncontextmenu="return false" href="template/modules_accueil/mes_outils/ajouter_favoris.php" class="picto nyroModal" style="padding-top: 25px; padding-bottom: 25px;" draggable="false" data-cursor-ref="e13">
+							<i class="fal fa-plus-square fa-3x curseurMain" alt="Cours en ligne"></i>
+						</a>
+											<a oncontextmenu="return false" href="template/modules_accueil/mes_outils/ajouter_favoris.php" class="picto nyroModal" style="padding-top: 25px; padding-bottom: 25px;" draggable="false" data-cursor-ref="e14">
+							<i class="fal fa-plus-square fa-3x curseurMain" alt="Cours en ligne"></i>
+						</a>
+											<a oncontextmenu="return false" href="template/modules_accueil/mes_outils/ajouter_favoris.php" class="picto nyroModal" style="padding-top: 25px; padding-bottom: 25px;" draggable="false" data-cursor-ref="e15">
+							<i class="fal fa-plus-square fa-3x curseurMain" alt="Cours en ligne"></i>
+						</a>
+					
+				</div>
+			</div>
+			 
+			<div class="bloc2 outils_btn">
+				<a id="btndragdrop" class="btn btn_tous curseurMain" onclick="dragUnLock()"><i aria-hidden="true" id="locker" class="fal fa-lock"></i><span id="id_span"> Organiser ses favoris</span></a>
+								<!--<a href="https://applisweb.universita.corsica/portail/PWD/index_utilisateur.php?acces=portail&profil=admin&id_site=0" class="btn btn_password">Changer de mot de passe</a>-->
+							<a href="https://applisweb.universita.corsica/portail/PWD/lien_activation_reset_compte-front.php?acces=portail&amp;profil=admin&amp;profil=&amp;id_site=0&amp;type=modification" class="btn btn_password" data-cursor-ref="e16">Changer de mot de passe</a>
+				                                                          
+					<a href="https://portailweb.universita.corsica/plugins/auth/logout.php?username=braaah2i&amp;id_site=0" class="btn btn_deconnexion" data-cursor-ref="e17"><i class="fas fa-sign-out" aria-hidden="true"></i> Se déconnecter</a>
+							</div>
+		</div>
+	</div>
+</div>
+<div class="container_main_auto" style="background-color:#F4F4F4">
+<div class="container_main" style="background-color:#F4F4F4">
+<div class="tousmesoutils_section" style="background-color:#fff"><p class="tousmesoutils_titresection" data-cursor-ref="e58">Mon tableau de bord</p>
+
+
+	
+<div class="tdbcol">
+
+Nom : M. ADEM SDIRI<br>Login : 20261655<br>        
+     Nombre de jours avant l'expiration de mot de passe : 94 <br><br><b>Profil Principal</b><br>
+       <b>ETUDIANT</b><br>Etuid : 20261655<br>Régime : Initiale<br>Visibilité photo RGPD : oui<br>Visibilité photo CARTA : oui<br>L1ST LICENCE-1-SCIENCES-ET-TECHNOLOGIES<br>Emploi du temps : <a href="edt/index.html" target="_self" data-cursor-ref="e18">LICENCE-1-SCIENCES-ET-TECHNOLOGIES</a><br>
+</div>
+<div class="tdbcol">
+	
+
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/locale/fr.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/locale/fr.js"></script>
-<script src="events.js"></script>
-<script src="celcat.js"></script>
-</body>
-</html>
+<div class="clear"></div>
+
+<hr style="margin: 10px 0px 5px; border: 0; background-color: #cac9c9; height: 1px; width: 100%;">
+
+<b>PROTECTION DES DONNÉES PERSONNELLES  : </b><br>
+<a href="https://applisweb.universita.corsica/portail/RGPD/index.php?id_site=0&amp;acces=portail&amp;profil=admin" data-cursor-ref="e19"><i class="fa-sharp fa-solid fa-user-gear" style="color:#ff5522"></i> Gérer mes données</a>&nbsp;&nbsp;|&nbsp;<i class="fa-sharp fa-solid fa-envelopes-bulk" style="color:#ff5522"></i>&nbsp;<a href="https://applisweb.universita.corsica/portail/tableau_bord/listing_groupes_distribution.php?id_site=0&amp;acces=portail&amp;profil=admin" target="_blank" data-cursor-ref="e20">Groupes de distribution</a>&nbsp;&nbsp;|&nbsp;<i class="fa-regular fa-solid  fa-file-shield" style="color:#ff5522"></i>&nbsp;<a href="https://ucorsica.provacy.com/" target="_blank" data-cursor-ref="e21">Déclaration d'un traitement RGPD</a>
+
+
+<style>
+.tdbcol {float:left;width:50%}
+ @media screen and (max-width : 960px) {
+.tdbcol {width:100%;padding:5px} }
+</style>
+</div></div>
+ <div class="clear"> </div>  
+
+
+
+<!--<div class="w50 pull-left pa1" style="background-color:#ff5522; color:#fff;min-height:90px">
+<p style="text-align: center;font-size:1.1em"><strong><a style="color:#fff" href="https://portailweb.universita.corsica/stockage_public/portail/baaaatfb/files/arretemasquecovid.pdf" target=_blank>LE PORT DU MASQUE EST OBLIGATOIRE&nbsp;SUR LES CAMPUS EN INT&Eacute;RIEUR ET EN EXT&Eacute;RIEUR</a></strong></p>
+</div>-->
+
+<!--<div class="w100 pull-left pa1" style="border-left:10px solid #fff; background-color:#ff5522; color:#fff;min-height:90px">
+<p style="text-align: center;font-size:1.1em"><strong>CORONAVIRUS : Ce qu&#39;il faut savoir</strong></p>
+<p style="text-align: center;"><a class="boutoncovid" href="https://studia.universita.corsica/plugins/faq/listing_faq-front.php?acces=ok&amp;id_menu=0&amp;id_rub=802&amp;id_cat=0&amp;id_art=3960&amp;id_site=1&amp;id_faq=6" target=_blank>Foire aux questions</a></p>
+</div>-->
+
+<!--<div class="w33 pull-left pa1" style="border-left:10px solid #fff; background-color:#ff5522; color:#fff;min-height:90px">
+<p style="text-align: center;font-size:1.1em"><strong>Se faire tester &agrave; l'Universit&eacute;</strong></p>
+<p style="text-align: center;"><a class="boutoncovid" href="https://applisweb.universita.corsica/portail/covid19_rdzv/calendrier.php?acces=portail&profil=admin&id_site=0&day=2020-11-01" target=_blank>PRENDRE RENDEZ-VOUS</a></p>
+</div>-->
+
+<div class="clear">&nbsp;</div>
+
+
+
+
+	<div class="tousmesoutils_section"><p class="tousmesoutils_titresection" style="border-top:1px solid #b4b3b3" data-cursor-ref="e59">VIE UNIVERSITAIRE</p>
+
+				<a href="https://login.microsoftonline.com/login.srf?wa=wsignin1.0&amp;whr=universita.corsica&amp;wreply=https://portal.microsoftonline.com" target="_blank">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-at fa-3x fa-3x" alt="Office 365"></i>
+					<br><span>Office 365</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/portail/formulaires/index.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-question fa-3x" alt="Formulaires / Questionnaires"></i>
+					<br><span>Formulaires / Questionnaires</span>
+								</div>
+			</a>
+						<a href="https://portailweb.universita.corsica/plugins/actu/grand_calendrier_events.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-calendar-day fa-3x" alt="Calendrier évènementiel"></i>
+					<br><span>Calendrier évènementiel</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/poip/offrestages/index.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli enq">
+					<i class="fal fa-university fa-3x" alt="Offres d'emplois, de stages et d'alternances"></i>
+					<br><span>Offres d'emplois, de stages et d'alternances</span>
+				<span style="float: right;" class="badge">20</span>
+				</div>
+			</a>
+						<a href="https://actu.universita.corsica/" target="_blank">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-calendar-alt fa-3x" alt="Les actus"></i>
+					<br><span>Les actus</span>
+								</div>
+			</a>
+						<a href="https://sharepoint.univ-corse.fr/sites/vie_univ/Documents%20partages/Forms/AllItems.aspx" target="_blank">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-suitcase fa-3x fa-3x" alt="Vie universitaire"></i>
+					<br><span>Vie universitaire</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/devu/demande_pret_ordinateur/index.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-hand-holding-box fa-3x" alt="Demande de prêt d'ordinateur"></i>
+					<br><span>Demande de prêt d'ordinateur</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/devu/signalement_harcelement/index.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli enq">
+					<i class="fal fa-shield-check fa-3x" alt="Harcèlement Violence Discrimination"></i>
+					<br><span>Harcèlement Violence Discrimination</span>
+								</div>
+			</a>
+						<a href="https://filesender.renater.fr/Shibboleth.sso/Login?entityID=https://shibboleth.univ-corse.fr/idp/shibboleth&amp;target=https://filesender.renater.fr" target="_blank">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-cloud-arrow-up fa-3x fa-3x" alt="FileSender"></i>
+					<br><span>FileSender</span>
+								</div>
+			</a>
+						<a href="https://rendez-vous.renater.fr/home/">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-video fa-3x" alt="Webconférence RENATER"></i>
+					<br><span>Webconférence RENATER</span>
+								</div>
+			</a>
+			<script type="text/javascript">		
+$(document).ready(function() {
+	
+$('#deroulant_203_b').on("click", function(){
+		$(this).removeClass('active');
+		if ($('#deroulant_203 .bouton_deroulant .btn_partage').hasClass("show")) {
+			$('#deroulant_203 .bouton_deroulant .btn_partage').removeClass("show");
+			$('#deroulant_203 .bouton_deroulant').removeClass("show_bouton_deroulant");
+		}else{
+			$(this).addClass('active');
+			$('#deroulant_203 .bouton_deroulant .btn_partage').addClass("show");
+			$('#deroulant_203 .bouton_deroulant').addClass("show_bouton_deroulant");
+		}
+	return false;
+	});	
+	
+});	
+</script>			
+		
+				<div id="deroulant_203">
+						<a href="#" id="deroulant_203" class="partage">
+							<div class="tousmesoutils_appli enq" id="deroulant_203_b">
+								<i class="fal fa-utensils fa-3x fa-3x fa-3x" alt="CROUS"></i>
+								<br>CROUS<br>
+								<i class="fal fa-angle-down fa-2x" alt=""></i>
+							</div>
+						</a>
+			    	<div class="bouton_deroulant">
+						<div class="btn_partage animated fadeInLeft">
+															<a href="https://portailweb.universita.corsica/article.php?id_art=411&amp;id_rub=137" target="_blank">
+									<div class="tousmesoutils_appli active_btn" style="border-color: #fff;">
+										<i class="fal fa-money-check-alt fa-3x  fa-3x" alt="CROUS / Carte IZLY"></i><br>CROUS / Carte IZLY                                        
+									</div>
+								</a>
+																<a href="https://applisweb.universita.corsica/crous/menu_resto_u/choisir_campus.php?acces=portail&amp;profil=admin&amp;id_site=0">
+									<div class="tousmesoutils_appli active_btn" style="border-color: #fff;">
+										<i class="fal fa-utensils fa-3x  fa-3x" alt="Menu Crous"></i><br>Menu Crous                                        
+									</div>
+								</a>
+														</div>
+					</div>
+				</div>
+						<a href="https://portailweb.universita.corsica/article.php?id_rub=182&amp;id_art=4726" target="_blank">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-box-ballot fa-3x" alt="Vote électronique"></i>
+					<br><span>Vote électronique</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/fundazione/alumni/index.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-user-graduate fa-3x" alt="Réseau Alumni "></i>
+					<br><span>Réseau Alumni </span>
+								</div>
+			</a>
+			<script type="text/javascript">		
+$(document).ready(function() {
+	
+$('#deroulant_406_b').on("click", function(){
+		$(this).removeClass('active');
+		if ($('#deroulant_406 .bouton_deroulant .btn_partage').hasClass("show")) {
+			$('#deroulant_406 .bouton_deroulant .btn_partage').removeClass("show");
+			$('#deroulant_406 .bouton_deroulant').removeClass("show_bouton_deroulant");
+		}else{
+			$(this).addClass('active');
+			$('#deroulant_406 .bouton_deroulant .btn_partage').addClass("show");
+			$('#deroulant_406 .bouton_deroulant').addClass("show_bouton_deroulant");
+		}
+	return false;
+	});	
+	
+});	
+</script>			
+		
+				<div id="deroulant_406">
+						<a href="#" id="deroulant_406" class="partage">
+							<div class="tousmesoutils_appli enq" id="deroulant_406_b">
+								<i class="fal fa-user-shield fa-3x fa-3x fa-3x" alt="La Prévention"></i>
+								<br>La Prévention<br>
+								<i class="fal fa-angle-down fa-2x" alt=""></i>
+							</div>
+						</a>
+			    	<div class="bouton_deroulant">
+						<div class="btn_partage animated fadeInLeft">
+															<a href="https://persunali.universita.corsica/article.php?id_rub=1088&amp;id_art=5977&amp;id_site=2&amp;id_cat=0&amp;id_menu=15">
+									<div class="tousmesoutils_appli active_btn" style="border-color: #fff;">
+										<i class="fal fa-user-shield  fa-3x" alt="Prévention"></i><br>Prévention                                        
+									</div>
+								</a>
+																<a href="https://applisweb.universita.corsica/dplp/alerte_sms_etudiants/index.php?acces=portail&amp;profil=admin&amp;id_site=0">
+									<div class="tousmesoutils_appli active_btn" style="border-color: #fff;">
+										<i class="fal fa-comment-sms  fa-3x" alt="Inscription au service d'alertes par SMS (Etudiants)"></i><br>Inscription au service d'alertes par SMS (Etudiants)                                        
+									</div>
+								</a>
+														</div>
+					</div>
+				</div>
+						<a href="https://applisweb.universita.corsica/portail/reservation_evenement/index.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-ticket-alt fa-3x" alt="Reservation évènement"></i>
+					<br><span>Reservation évènement</span>
+				<span style="float: right;" class="badge">20</span>
+
+				</div>
+			</a>
+				</div>
+	 
+		<div class="clear"></div>
+         
+	<div class="tousmesoutils_section"><p class="tousmesoutils_titresection" style="border-top:1px solid #b4b3b3" data-cursor-ref="e60">SCOLARITE</p>
+
+				<a href="https://studia.universita.corsica/plugins/parcours_inscriptions/parcours_inscriptions-front.php?acces=ok&amp;id_art=329&amp;id_rub=155&amp;header_plugin=ok">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-graduation-cap fa-3x" alt="S'inscrire"></i>
+					<br><span>S'inscrire</span>
+								</div>
+			</a>
+						<a href="https://studia.universita.corsica/article.php?id_site=1&amp;id_menu=4&amp;id_rub=156&amp;id_cat=0&amp;id_art=5548&amp;lang=fr">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-graduation-cap fa-3x" alt="Démarches administratives"></i>
+					<br><span>Démarches administratives</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/devu/mon_dossier_scolarite/dos_etud_adm.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-graduation-cap fa-3x" alt="Dossier administratif"></i>
+					<br><span>Dossier administratif</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/devu/mon_dossier_scolarite/dos_etud_ctp.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-graduation-cap fa-3x" alt="Mon dossier scolarité"></i>
+					<br><span>Mon dossier scolarité</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/devu/psyen_rdzv/calendrier.php?acces=portail&amp;profil=admin&amp;id_site=0&amp;day=2026-09-27">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-calendar-alt fa-3x" alt="RDV Conseiller Psy Orientation"></i>
+					<br><span>RDV Conseiller Psy Orientation</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/portail/formulaires/voir_formulaire-front.php?id_survey=425&amp;profil=admin&amp;id_site=0&amp;acces=portail">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-question fa-3x" alt="Boîte à idées CVEC"></i>
+					<br><span>Boîte à idées CVEC</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/devu/acsee/index.php?acces=portail&amp;profil=admin&amp;id_site=0&amp;day=2026-09-27">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-theater-masks fa-3x" alt="Activités"></i>
+					<br><span>Activités</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/devu/riescita/index.php?acces=portail&amp;profil=admin&amp;id_site=0&amp;day=2026-09-27">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-file-contract fa-3x" alt="Riescita"></i>
+					<br><span>Riescita</span>
+								</div>
+			</a>
+				</div>
+	 
+		<div class="clear"></div>
+         
+	<div class="tousmesoutils_section"><p class="tousmesoutils_titresection" style="border-top:1px solid #b4b3b3" data-cursor-ref="e61">FORMATION</p>
+
+	<script type="text/javascript">		
+$(document).ready(function() {
+	
+$('#deroulant_250_b').on("click", function(){
+		$(this).removeClass('active');
+		if ($('#deroulant_250 .bouton_deroulant .btn_partage').hasClass("show")) {
+			$('#deroulant_250 .bouton_deroulant .btn_partage').removeClass("show");
+			$('#deroulant_250 .bouton_deroulant').removeClass("show_bouton_deroulant");
+		}else{
+			$(this).addClass('active');
+			$('#deroulant_250 .bouton_deroulant .btn_partage').addClass("show");
+			$('#deroulant_250 .bouton_deroulant').addClass("show_bouton_deroulant");
+		}
+	return false;
+	});	
+	
+});	
+</script>			
+		
+				<div id="deroulant_250">
+						<a href="#" id="deroulant_250" class="partage">
+							<div class="tousmesoutils_appli enq" id="deroulant_250_b">
+								<i class="fal fa-clock fa-3x fa-3x fa-3x" alt="Emploi du temps"></i>
+								<br>Emploi du temps<br>
+								<i class="fal fa-angle-down fa-2x" alt=""></i>
+							</div>
+						</a>
+			    	<div class="bouton_deroulant">
+						<div class="btn_partage animated fadeInLeft">
+															<a href="edt/index.html" target="_self">
+									<div class="tousmesoutils_appli active_btn" style="border-color: #fff;">
+										<i class="fal fa-clock fa-3x  fa-3x" alt="Accueil EDT"></i><br>Accueil EDT                                        
+									</div>
+								</a>
+														</div>
+					</div>
+				</div>
+						<a href="https://cours.universita.corsica">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-desktop fa-3x" alt="Cours en ligne"></i>
+					<br><span>Cours en ligne</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/poip/conventionstage/index.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-handshake fa-3x" alt="Conventions de stage"></i>
+					<br><span>Conventions de stage</span>
+								</div>
+			</a>
+						<a href="https://conpere.univ-corse.fr">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-file-contract fa-3x" alt="ConPeRe"></i>
+					<br><span>ConPeRe</span>
+								</div>
+			</a>
+						<a href="https://auth.sketchengine.eu/" target="_blank">
+				<div class="tousmesoutils_appli">
+					<i class="far fa-paragraph fa-3x" alt="Sketch Engine"></i>
+					<br><span>Sketch Engine</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/devu/emargements/index.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-clipboard-list-check fa-3x" alt="EMARGEMENTS"></i>
+					<br><span>EMARGEMENTS</span>
+								</div>
+			</a>
+				</div>
+	 
+		<div class="clear"></div>
+         
+	<div class="tousmesoutils_section"><p class="tousmesoutils_titresection" style="border-top:1px solid #b4b3b3" data-cursor-ref="e62">ANNUAIRES</p>
+
+				<a href="https://applisweb.universita.corsica/portail/annuaires/annuaire_pers/index.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-address-book fa-3x" alt="Annuaire Personnels"></i>
+					<br><span>Annuaire Personnels</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/portail/annuaires/annuaire_etu/recherche_etu.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-address-book fa-3x" alt="Annuaire Etudiants"></i>
+					<br><span>Annuaire Etudiants</span>
+								</div>
+			</a>
+						<a href="https://portailweb.universita.corsica/plugins/associations/listing_associations-front.php?id_art=495&amp;id_rub=139?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-hand-peace fa-3x" alt="Annuaire des associations"></i>
+					<br><span>Annuaire des associations</span>
+								</div>
+			</a>
+				</div>
+	 
+		<div class="clear"></div>
+         
+	<div class="tousmesoutils_section"><p class="tousmesoutils_titresection" style="border-top:1px solid #b4b3b3" data-cursor-ref="e63">BIBLIOTHÈQUE</p>
+
+				<a href="https://applisweb.universita.corsica/bu/annales/index.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-graduation-cap  fa-3x" alt="Annales sujets d'examen"></i>
+					<br><span>Annales sujets d'examen</span>
+								</div>
+			</a>
+						<a href="https://portailweb.universita.corsica/plugins/ress_electronique_bu/ress_electronique_bu-front.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-book fa-3x" alt="Ressources élect. BU"></i>
+					<br><span>Ressources élect. BU</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/bu/ress_electronique/index.php?profil=admin&amp;id_site=0&amp;acces=portail">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-newspaper fa-3x" alt="Journaux et magazines en ligne"></i>
+					<br><span>Journaux et magazines en ligne</span>
+								</div>
+			</a>
+						<a href="https://studia.universita.corsica/article.php?id_site=1&amp;id_menu=7&amp;id_rub=141&amp;id_cat=0&amp;id_art=303&amp;lang=fr" target="_blank">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-book fa-3x" alt="Toute la bibliothèque"></i>
+					<br><span>Toute la bibliothèque</span>
+								</div>
+			</a>
+						<a href="https://applisweb.universita.corsica/bu/bu_rdzv/index.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-calendar-alt fa-3x" alt="Résa Salles BU"></i>
+					<br><span>Résa Salles BU</span>
+								</div>
+			</a>
+				</div>
+	 
+		<div class="clear"></div>
+         
+	<div class="tousmesoutils_section"><p class="tousmesoutils_titresection" style="border-top:1px solid #b4b3b3" data-cursor-ref="e64">ECO-CAMPUS</p>
+
+				<a href="https://applisweb.universita.corsica/dsi/covoiturage/index.php?acces=portail&amp;profil=admin&amp;id_site=0">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-car-side fa-3x" alt="Covoiturage"></i>
+					<br><span>Covoiturage</span>
+				<span style="float: right;" class="badge">50</span>
+				</div>
+			</a>
+						<a href="https://portailweb.universita.corsica/article.php?id_art=885&amp;id_rub=371">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-recycle fa-3x" alt="Tri selectif"></i>
+					<br><span>Tri selectif</span>
+								</div>
+			</a>
+				</div>
+	 
+		<div class="clear"></div>
+         
+	<div class="tousmesoutils_section"><p class="tousmesoutils_titresection" style="border-top:1px solid #b4b3b3" data-cursor-ref="e65">LOGICIELS et OFFRES PROMOTIONNELLES INFORMATIQUE</p>
+
+				<a href="https://e5.onthehub.com/WebStore/Security/SignIn.aspx?rurl=%2fWebStore%2fWelcome.aspx%3fws%3da657ef92-709b-e011-969d-0030487d8897&amp;ws=a657ef92-709b-e011-969d-0030487d8897&amp;vsro=8">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-shopping-bag fa-3x" alt="Microsoft Imagine"></i>
+					<br><span>Microsoft Imagine</span>
+								</div>
+			</a>
+						<a href="https://fr.mathworks.com/academia/tah-portal/universite-de-corse-31286747.html" target="_blank">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-shopping-bag fa-3x" alt="MATLAB"></i>
+					<br><span>MATLAB</span>
+								</div>
+			</a>
+						<a href="https://is.gd/DellAdvantage/university?entityId=https%3A%2F%2Fshibboleth.univ-corse.fr%2Fidp%2Fshibboleth" target="_blank">
+				<div class="tousmesoutils_appli">
+					<i class="fal fa-shopping-bag fa-3x" alt="Dell Advantage"></i>
+					<br><span>Dell Advantage</span>
+								</div>
+			</a>
+				</div>
+	 
+		<div class="clear"></div>
+         
+       
+    
+   
+    <div class="tousmesoutils_section"><p class="tousmesoutils_titresection" style="border-top:1px solid #b4b3b3" data-cursor-ref="e66">Enquêtes</p>
+    		
+						<a href="https://applisweb.universita.corsica/portail/formulaires/voir_formulaire-front.php?id_survey=425&amp;profil=admin&amp;id_site=0&amp;acces=portail">
+						<div class="tousmesoutils_appli enqu"><i class="fal fa-question fa-3x" alt="Enquete en ligne"></i><br><span>Boîte à idées CVEC</span></div></a>
+							
+						<a href="https://applisweb.universita.corsica/portail/formulaires/voir_formulaire-front.php?id_survey=440&amp;profil=admin&amp;id_site=0&amp;acces=portail">
+						<div class="tousmesoutils_appli enqu enq"><i class="fal fa-question fa-3x" alt="Enquete en ligne"></i><br><span>Enquête Service de Médecine préventive</span></div></a>
+							
+						<a href="https://applisweb.universita.corsica/portail/formulaires/voir_formulaire-front.php?id_survey=739&amp;profil=admin&amp;id_site=0&amp;acces=portail">
+						<div class="tousmesoutils_appli enqu"><i class="fal fa-question fa-3x" alt="Enquete en ligne"></i><br><span>test upload</span></div></a>
+							
+						<a href="https://applisweb.universita.corsica/portail/formulaires/voir_formulaire-front.php?id_survey=762&amp;profil=admin&amp;id_site=0&amp;acces=portail">
+						<div class="tousmesoutils_appli enqu"><i class="fal fa-question fa-3x" alt="Enquete en ligne"></i><br><span>Choix Expertise</span></div></a>
+							
+						<a href="https://applisweb.universita.corsica/portail/formulaires/voir_formulaire-front.php?id_survey=765&amp;profil=admin&amp;id_site=0&amp;acces=portail">
+						<div class="tousmesoutils_appli enqu"><i class="fal fa-question fa-3x" alt="Enquete en ligne"></i><br><span>Demande de renseignement</span></div></a>
+							
+						<a href="https://applisweb.universita.corsica/portail/formulaires/voir_formulaire-front.php?id_survey=767&amp;profil=admin&amp;id_site=0&amp;acces=portail">
+						<div class="tousmesoutils_appli enqu"><i class="fal fa-question fa-3x" alt="Enquete en ligne"></i><br><span>Contact_Buddy</span></div></a>
+						 </div>
+  <div class="clear"> </div>
+   
+ 
+          <div class="tousmesoutils_section"><p class="tousmesoutils_titresection" data-cursor-ref="e67">SILEX</p>
+                          <a href="https://applisweb.universita.corsica/fablab/fablab_rdzv/calendrier.php?acces=portail&amp;profil=admin&amp;id_site=9&amp;day=2026-09-27"><div class="tousmesoutils_appli" style="border:2px solid #0C2235" onmouseover="this.style.background='#0C2235'" onmouseout="this.style.background='#f4f4f4'"><i class="fal fa-calendar-alt fa-3x" alt=""></i><br>Réservations Fablab</div></a>
+                            <a href="https://applisweb.universita.corsica/fablab/galerie_projets/gestion_galerie_projets.php?acces=portail&amp;profil=admin&amp;id_site=9"><div class="tousmesoutils_appli" style="border:2px solid #0C2235" onmouseover="this.style.background='#0C2235'" onmouseout="this.style.background='#f4f4f4'"><i class="fal fa-wrench fa-3x" alt=""></i><br>Galerie Projets Fablab</div></a>
+                            <a href="https://applisweb.universita.corsica/portail/reservation_evenement/index.php?acces=portail&amp;profil=admin&amp;id_site=9"><div class="tousmesoutils_appli" style="border:2px solid #0C2235" onmouseover="this.style.background='#0C2235'" onmouseout="this.style.background='#f4f4f4'"><i class="fal fa-ticket-alt fa-3x" alt=""></i><br>Reservation évènement</div></a>
+                        </div>
+          <div class="clear"> </div>
+          
+          <div class="tousmesoutils_section"><p class="tousmesoutils_titresection" data-cursor-ref="e68">École Doctorale</p>
+                          <a href="https://applisweb.universita.corsica/ecole_doctorale/offres_these/index.php?acces=portail&amp;profil=admin&amp;id_site=21"><div class="tousmesoutils_appli" style="border:2px solid #1a3c61" onmouseover="this.style.background='#1a3c61'" onmouseout="this.style.background='#f4f4f4'"><i class="fal fa-quote-right fa-3x" alt=""></i><br>Offres de Thèses</div></a>
+                            <a href="https://applisweb.universita.corsica/ecole_doctorale/candidatures_these/index.php?acces=portail&amp;profil=admin&amp;id_site=21"><div class="tousmesoutils_appli" style="border:2px solid #1a3c61" onmouseover="this.style.background='#1a3c61'" onmouseout="this.style.background='#f4f4f4'"><i class="fal fa-archive  fa-3x" alt=""></i><br>Candidatures sur les Thèses</div></a>
+                            <a href="https://applisweb.universita.corsica/ecole_doctorale/comite_suivi_individuel/index.php?acces=portail&amp;profil=admin&amp;id_site=21"><div class="tousmesoutils_appli" style="border:2px solid #1a3c61" onmouseover="this.style.background='#1a3c61'" onmouseout="this.style.background='#f4f4f4'"><i class="fal fa-folders fa-3x" alt=""></i><br>Comité de suivi individuel</div></a>
+                        </div>
+          <div class="clear"> </div>
+          
+          <div class="tousmesoutils_section"><p class="tousmesoutils_titresection" data-cursor-ref="e69">Faculté de Droit et de Science Politique de Corse </p>
+                          <a href="https://applisweb.universita.corsica/fdsp/clinique_rdzv/calendrier.php?acces=portail&amp;profil=admin&amp;id_site=27"><div class="tousmesoutils_appli" style="border:2px solid #e70033" onmouseover="this.style.background='#e70033'" onmouseout="this.style.background='#f4f4f4'"><i class="fal fa-house-laptop fa-3x" alt=""></i><br>Clinique rendez-vous</div></a>
+                        </div>
+          <div class="clear"> </div>
+          
+          <div class="tousmesoutils_section"><p class="tousmesoutils_titresection" data-cursor-ref="e70">Institut National Supérieur du Professorat et de l'Éducation</p>
+                          <a href="https://applisweb.universita.corsica/inspe/memoires_recherche/index.php?acces=portail&amp;profil=admin&amp;id_site=32"><div class="tousmesoutils_appli" style="border:2px solid #0b3d92" onmouseover="this.style.background='#0b3d92'" onmouseout="this.style.background='#f4f4f4'"><i class="fal fa-book-bookmark fa-3x" alt=""></i><br>Mémoires de recherche</div></a>
+                        </div>
+          <div class="clear"> </div>
+          	</div>
+</div>
+<style type="text/css">
+	#deroulant_203 .bouton_deroulant {width: 100%; float: left; display: none;}#deroulant_203 .bouton_deroulant.show_bouton_deroulant {width: 100%; float: left; display: block;}#deroulant_203 .bouton_deroulant .partage,#deroulant_203 .bouton_deroulant .print2 {display: block;  text-align: center;}#deroulant_203 .bouton_deroulant .btn_partage {display: none; margin: 0;}#deroulant_203 .bouton_deroulant .btn_partage.show {display: inline-block;background: #FF5522; width: 100%; vertical-align: top;  margin-bottom: 00px;}#deroulant_203 .bouton_deroulant .btn_partage a {width: 160px; height: 120px; float: left; margin-right: 20px; text-align: center; color: #000;}#deroulant_406 .bouton_deroulant {width: 100%; float: left; display: none;}#deroulant_406 .bouton_deroulant.show_bouton_deroulant {width: 100%; float: left; display: block;}#deroulant_406 .bouton_deroulant .partage,#deroulant_406 .bouton_deroulant .print2 {display: block;  text-align: center;}#deroulant_406 .bouton_deroulant .btn_partage {display: none; margin: 0;}#deroulant_406 .bouton_deroulant .btn_partage.show {display: inline-block;background: #FF5522; width: 100%; vertical-align: top;  margin-bottom: 00px;}#deroulant_406 .bouton_deroulant .btn_partage a {width: 160px; height: 120px; float: left; margin-right: 20px; text-align: center; color: #000;}#deroulant_250 .bouton_deroulant {width: 100%; float: left; display: none;}#deroulant_250 .bouton_deroulant.show_bouton_deroulant {width: 100%; float: left; display: block;}#deroulant_250 .bouton_deroulant .partage,#deroulant_250 .bouton_deroulant .print2 {display: block;  text-align: center;}#deroulant_250 .bouton_deroulant .btn_partage {display: none; margin: 0;}#deroulant_250 .bouton_deroulant .btn_partage.show {display: inline-block;background: #FF5522; width: 100%; vertical-align: top;  margin-bottom: 00px;}#deroulant_250 .bouton_deroulant .btn_partage a {width: 160px; height: 120px; float: left; margin-right: 20px; text-align: center; color: #000;}	
+	#deroulant .bouton_deroulant{
+		width: auto;
+	}
+	.mes_outils [class^=picto]{
+		min-width: 85px;
+		float: left;
+		margin-right: 0.5%;
+	}
+	.deletIco{
+		position: relative;
+		left: 24px;
+		top: 3px;
+		visibility: hidden;
+	}
+	.curseurMain{
+		cursor:pointer;
+	}
+
+	#pluginbomenu{
+		float: left;
+		width: 100%;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+	.mes_outils .outils_picto{
+		padding-top: 15px;
+		padding-bottom: 28px;
+	}
+	.outils_picto{
+		padding-right: 20px;
+		padding-left: 20px;
+		margin : auto;
+		height: 140px;
+	}
+	.ui-placeholder{
+		margin-left : 6px;
+		margin-bottom: 6px;
+		padding-left: 15px;
+		min-height: 105px;
+		width: 90px;
+		border: 1px dashed grey;
+		-moz-border-radius:7px;
+		-webkit-border-radius:7px;
+		border-radius:7px;
+	}
+	.ui-placeholder:hover{
+		background-color: #E8E9E9;
+	}
+	.ui-placeholder:active{
+		background-color: #CED1D1;
+	}
+
+	.mes_outils [class^=picto]:first-child {
+		padding: 0 12px;
+	}
+
+	.outils .outils_btn{
+		padding: 15px 10px 10px 10px;
+	}
+
+
+
+
+	.active_btn {background-color:#fff}
+
+	.vc_text_separator.full
+	{    
+		position: relative;
+	    box-sizing: border-box;
+	    border-bottom: 0;
+	    text-align: left
+	}
+
+	.separator_line {
+	    position: absolute;
+	    top: 50%;
+	    left: 0;
+	    height: 1px;
+	    width: 100%;
+	    padding: 0;
+	    display: block;
+	    background-color: #a6a6a6;
+	    z-index: 1;
+	}
+
+	.separator_wrapper {
+	    position: relative;
+	    display: inline-block;
+	    vertical-align: middle;
+	    top: 0;
+	    padding: 0 0px;
+	    background-color: #f4f4f4;
+	    border: 0;
+	    z-index: 2;
+	}
+
+	.tousmesoutils_appli:hover{
+		background-color:#FF5522;
+		color:#fff;
+		border:2px solid #fff;
+	}
+	
+	.bouton_deroulant:hover .montest2:before{
+    	display: none;
+	}
+
+	.enq:hover .fa-question{
+		display: none;
+	}
+
+	.enq span{
+		overflow: hidden;
+		word-wrap: break-word;
+		/*width: 140px;*/
+		max-height: 34px;
+		float: left;
+		text-overflow: ellipsis; 
+		text-align: center;
+	}
+	.enq:hover{
+			width: 305px !important;
+	} 
+	.enq:hover span{
+		/*min-width: 140px;*/
+		width: 100% !important;
+		max-height: 34px;
+		float: left;
+		
+		overflow: visible;
+	}
+	
+	
+	
+	.vc_text_separator.full .separator_content {
+	    font-size: 1.5em;
+	    line-height: 30px;
+	    color: #3e3e3e;
+	    font-weight: 500;
+	    letter-spacing: 1px;
+	    text-align: left;
+	    text-transform: uppercase;
+	    padding: 10px 20px;
+	}
+
+	@media only screen and (max-width: 961px) {
+		#pluginbomenu{
+			width: 100%;
+			float: left;
+			margin-top: 160px;
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+		.outils .outils_btn{
+			border-left: 0px;
+			border-top: 1px solid #b4b3b3;*/
+			width: 100%;
+			padding: 15px 10px 10px 10px;
+			margin-top: 2%;
+		}
+		.bloc2{
+			margin-left: 0;
+		}
+		.bloc1{
+			margin-right: 1px;
+			margin-bottom: 0px;
+		}
+		#outils_picto{
+		padding-right: 0px;
+		padding-left: 0px;
+		width: 100%;
+		height: 260px;
+		}
+	.mes_outils [class^=picto]{
+		margin-right: 3%;
+	}
+	}
+	@media only screen and (max-width: 770px) {
+		#pluginbomenu{
+			margin-top: 15px;
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+		.mes_outils [class^=picto]{
+			margin-right: 0;
+		}
+		/*.tousmesoutils_appli {
+		    width: 140px;
+		    height: 110px;
+		}*/
+	}
+</style>
+<script type="text/javascript">
+	/* flag onclick drag & drop */
+	var propagation = 1;
+	/* flag maj pos */
+	var update_flag = 0;
+	/* Text Balise span BTN activation modification */
+	var span = document.getElementById("id_span");
+	/* btn appele fonction dragUnlock et dragLock*/
+	var btnonclick = document.getElementById("btndragdrop");
+	/* selection de tout les outils */
+	var cols = document.querySelectorAll('.picto');
+	/* init span*/
+	span.innerHTML=" Organiser ses favoris";
+	/* id du btn ajouter */
+	var id_btn_add = 0;
+
+	//document.getElementById("locker").classList.add('fas fa-lock');
+	//document.getElementById("btndragdrop").classList.add('fa-lock');
+	$('#locker').addClass('fal fa-lock');
+	/* Cacher BTN se deconnecter en nyroModal */
+	$(".nyroModal").click(function(){
+		document.getElementById('boutonconnexion').style.visibility = 'hidden';
+	});
+
+	/* rendre visible le btn deconnexion */
+	$(".nyroModalBg").click(function(){
+		document.getElementById('boutonconnexion').style.visibility = 'visible';
+	});
+
+	$('.outils_picto, .container>.picto').sortable({
+	    "containment": '.outils_picto',
+	    "opacity": '0.5',
+	    start: function( event, ui ) {
+	    	update_flag = 1;
+	    	event.stopPropagation();
+	    	event.isPropagationStopped();
+	    },
+	    stop: function( event, ui ) {
+	    	event.stopPropagation();
+	    	event.isPropagationStopped();
+	    }
+	});
+	$('.outils_picto, .container>.picto').sortable("disable");
+	$('.outils_picto, .container>.picto').disableSelection();
+
+	
+	var span_length = document.querySelectorAll('.enqu span');
+	var span_length_enq = document.querySelectorAll('.enqu');
+	for(var d = 0; d < span_length.length; d++){
+		if(span_length[d].innerHTML.length>24){
+			span_length_enq[d].classList.add('enq');
+		}
+		
+	}
+	
+	function isOverflown(element){
+	  return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+	}
+
+	function dragUnLock(){
+		update_flag = 0;
+		propagation = 0;
+		/* on cache le btn delet */
+		var deletIco = document.querySelectorAll('.deletIco');
+		/* value du btn orange */
+		span.innerHTML=' Modification en cours ...';
+		/* changement de la fonction on click BTN orange */
+		btnonclick.setAttribute('onclick','dragLock()');
+		/* changement dynamique icone  lock */
+		//document.getElementById("btndragdrop").classList.remove('fa-lock-open');
+		//document.getElementById("btndragdrop").classList.add('fa-lock');
+		$('#locker').removeClass('fal fa-lock').addClass('fal fa-lock-open');
+		/* Afficher icone DELET */
+		for(var j = 0; j < deletIco.length; j++){
+			deletIco[j].style.visibility = 'visible';
+		}
+		/* Permet le drag and drop */
+		for(var i = 0; i < cols.length; i++){
+			var drag = document.querySelectorAll('.picto');
+			drag[i].setAttribute('draggable', 'true');
+		}
+		$('.outils_picto, .container>.picto').sortable("enable");
+		$('.picto').toggleClass('ui-placeholder');
+	}
+
+	function dragLock(){
+		propagation = 1;
+		/* selection des btn delet*/
+		var deletIco = document.querySelectorAll('.deletIco');
+		/* Changement du text btn orange*/
+		span.innerHTML=' Organiser ses favoris';
+		/* changement de fonction btn orange */
+		btnonclick.setAttribute('onclick','dragUnLock()');
+		/* changement dynamique icone  lock */
+		//document.getElementById("btndragdrop").classList.remove('fa-lock');
+		//document.getElementById("btndragdrop").classList.add('fa-lock-open');
+		$('#locker').removeClass('fal fa-lock-open').addClass('fal fa-lock');
+		$('.outils_picto, .container>.picto').sortable("disable");
+		/* Cache le btn delet */
+		for(var j = 0; j < deletIco.length; j++){
+			deletIco[j].style.visibility = 'hidden';
+		}
+
+		/* ne permet plus le drag an drop des elements et MAJ des positions*/
+		for(var i = 0; i < cols.length; i++){
+			var drag = document.querySelectorAll('.picto');
+			drag[i].setAttribute('draggable', 'false');
+			if(update_flag == 1)
+			{
+				update_position($(drag[i]).attr('uid'), $(drag[i]).attr('id_appli'), $(drag[i]).attr('id_outil'), $(drag[i]).attr('id_plugin'), i);
+			}
+		}
+		$('.picto').toggleClass('ui-placeholder');
+	}
+
+	function update_position(uid, id_appli, id_outil, id_plugin, position){
+		
+		$.ajax({
+				method: "POST",
+		        url: "template/modules_accueil/mes_outils/update_position_favoris.php",
+		        data: {
+		            username: uid,
+		            id_appli: id_appli,
+		            id_outil: id_outil,
+		            id_plugin: id_plugin,
+		            ordre: position
+		        },
+		    });
+	}
+
+	function suppression(uid, id_appli, id_outil, id_plugin){
+		
+		$.ajax({
+			method: "POST",
+	        url: "template/modules_accueil/mes_outils/suppression_favoris.php",
+	        data: {
+	            username: uid,
+	            id_appli: id_appli,
+	            id_outil: id_outil,
+	            id_plugin: id_plugin
+	        },
+		});
+		var id_element_delet = uid.concat(id_appli).concat(id_outil).concat(id_plugin);
+		document.getElementById(id_element_delet).style.display = 'none';
+		creationBtnAjouter();
+	}
+
+	function onClickLiens(link, targetBlank)
+	{
+		if(propagation==1)
+		{
+			if(targetBlank = 1){
+				window.open(link);
+			}else{
+				document.location.href=link;
+			}
+			
+		}
+	}
+
+	function creationBtnAjouter(){
+		id_btn_add++;
+
+		var ajouter = document.createElement('a');
+		ajouter.id = id_btn_add;
+		ajouter.href = 'template/modules_accueil/mes_outils/ajouter_favoris.php';
+		ajouter.className = 'picto nyroModal ui-placeholder';
+		ajouter.style = 'padding-top: 25px; padding-bottom: 25px;';
+		ajouter.oncontextmenu = 'return false';
+
+			var ajouterPicto = document.createElement('i');
+			ajouterPicto.className = 'fal fa-plus-square fa-3x curseurMain';
+
+		document.getElementById("outils_picto").appendChild(ajouter);
+		document.getElementById(id_btn_add).appendChild(ajouterPicto);
+
+		$(function() {
+		  $('.nyroModal').nyroModal();
+		});
+	}
+
+</script>
+  <script>
+  $("#progress-bar").onscroll({
+  backgroundColor: "#FF5522",
+  height: '5px',
+  position: 'fixed'
+});
+  </script>
+
+
+
+<footer role="footer">
+	<div class="top_footer">
+		<div class="container">
+			<div class="grid">
+				<div class="grid1-2">
+					<div class="social_footer">
+						<div class="title">Suivre l'Università di Corsica</div>
+						<a href="https://www.facebook.com/univcorse" target="_blank" class="facebook" title="Facebook" data-cursor-ref="e22"><span class="visually-hidden">Accéder à notre page Facebook</span></a>
+						<a href="https://twitter.com/univcorse" target="_blank" class="twitter" title="Twitter" data-cursor-ref="e23"><span class="visually-hidden">Accéder à notre compte Twitter</span></a>
+						<a href="https://www.instagram.com/univcorse/" target="_blank" class="instagram" title="Instagram" data-cursor-ref="e24"><span class="visually-hidden">Accéder à notre compte Instagram</span></a>
+						<a href="https://www.linkedin.com/edu/school?id=12495" target="_blank" class="linkedin" title="LinkedIn" data-cursor-ref="e25"><span class="visually-hidden">Accéder à notre page LinkedIn</span></a>								
+						<br>
+						<a href="https://www.youtube.com/c/univcorse" target="_blank" class="youtube" title="YouTube" data-cursor-ref="e26"><span class="visually-hidden">Accéder à notre compte YouTube</span></a>
+						<a href="http://www.franceculture.fr/conferences/corse-pasquale-paoli" target="_blank" class="france" title="Retrouvez une sélection de cours et de conférences sur France Culture Conférences, accessible depuis www.franceculture.fr" data-cursor-ref="e27"><span class="visually-hidden">Accéder à notre page France culture conférences</span></a>
+						<a href="https://www.universita.corsica/appli" target="_blank" class="mobile" title="Appli" data-cursor-ref="e28"><span class="visually-hidden">Accéder à notre appli</span></a>
+						<a href="https://www.universita.corsica/fr/flux-rss" target="_blank" class="rss" title="Flux RSS" data-cursor-ref="e29"><span class="visually-hidden">Accéder aux flux RSS</span></a>
+						<br><br>
+						<div class="title">La boutique de l'Università</div>
+						<a class="boutiquefooter" href="https://shop.universita.corsica" target="_blank" title="Aller sur la boutique de l'Université de Corse" data-cursor-ref="e30">A butteguccia</a><br>
+					</div>
+					<div>
+						<div class="title">À la Une sur nos sites web</div>
+						<div class="grid">
+							<div class="grid2">
+								<div>
+									<ul>
+										<li data-cursor-ref="e71">
+											<span class="titlerss">www.universita.corsica</span>
+											<p data-cursor-ref="e72">
+																									<a href="https://actu.universita.corsica/plugins/actu/actu-front.php?id_site=institutionnel&amp;id=11600" data-cursor-ref="e31">Journée Portes Ouvertes à Stella Mare le 3 octobre</a></p>
+													                                                
+												</li>
+												<li data-cursor-ref="e73">
+													<span class="titlerss">Etudiants &amp; futurs étudiants</span>
+													<p data-cursor-ref="e74">														<a href="https://studia.universita.corsica/plugins/actu/actu-front.php?id_site=1&amp;id=11495" data-cursor-ref="e32">Dates de rentrée 2026/2027 | IUT</a></p>
+														                                           
+													</li>
+													<li data-cursor-ref="e75">
+														<span class="titlerss">Recherche</span>
+														<p data-cursor-ref="e76">															<a href="https://ricerca.universita.corsica/plugins/actu/actu-front.php?id_site=3&amp;id=11287" data-cursor-ref="e33">Parc Galea - Entretien public avec Patrice Terramorsi </a></p>
+																													</li>
+													</ul>
+												</div>
+												<div>
+													<ul>
+														<!--<li>
+															<span class="titlerss">Partenaires professionnels</span>
+															<p>																<a href="https://pro.universita.corsica/plugins/actu/actu-front.php?id_site=4&amp;id=8240">Le projet UNITI lauréat de l’appel à projets ANR « ExcellenceS sous toutes ses formes » du Programme d’Investissements d’Avenir (PIA 4)</a></p>
+																															</li>-->
+															<li data-cursor-ref="e77">
+																<span class="titlerss">Fundazione di l'Università</span>
+																<p data-cursor-ref="e78">																	<a href="https://fundazione.universita.corsica/plugins/actu/actu-front.php?id_site=4&amp;id=11623" data-cursor-ref="e34">Parcours Custruì: Corse Marbrerie</a></p>
+																																	</li>
+															</ul> <a class="actufooter" href="https://actu.universita.corsica" target="_blank" title="Toutes les actualités de l'Université de Corse" data-cursor-ref="e35">Actus et calendrier évènementiel</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="bottom_footer">
+								<div class="container">
+									<div class="pull-left mentions">
+										<a href="https://www.universita.corsica/fr/mentions-legales" target="_blank" data-cursor-ref="e36">Crédits &amp; mentions légales</a>
+									</div>
+									<div class="pull-right">
+										<a href="https://www.universita.corsica/fr/contacts" target="_blank" data-cursor-ref="e37">Contacts</a>
+										<a href="https://www.universita.corsica/fr/universita/plan-des-campus/" target="_blank" data-cursor-ref="e38">Plan d'accès</a>								
+										<a href="https://www.universita.corsica/fr/presse" target="_blank" data-cursor-ref="e39">Espace presse</a>
+										<a href="https://phototheque.universita.corsica/" target="_blank" data-cursor-ref="e40">Photothèque</a>
+										<a href="https://www.universita.corsica/fr/recrutement" target="_blank" data-cursor-ref="e41">Recrutement</a>
+										<a href="https://pluginsweb.universita.corsica/plugins/marches_publics/marches_publics-front.php" target="_blank" data-cursor-ref="e42">Marchés publics</a>           					
+										<!--<a href="">Plan du site</a>-->
+										<a href="https://www.universita.corsica/fr/accessibilite/" target="_blank" data-cursor-ref="e43">Accessibilité</a>
+									</div>
+								</div>
+							</div>
+							
+
+
+																								<a href="https://portailweb.universita.corsica/plugins/auth/logout.php?username=braaah2i&amp;id_site=0"><div id="boutonconnexion"><i class="fa fa-sign-out fa-1x"></i>&nbsp;&nbsp;Se déconnecter</div></a>
+									
+									
+									
+							</footer>
+						
+
+	<link rel="stylesheet" type="text/css" href="https://portailweb.universita.corsica/template/template_back_office/css/google-fonts.css">
+	<link rel="stylesheet" type="text/css" href="https://portailweb.universita.corsica/template/template_back_office/css/animate.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="https://portailweb.universita.corsica/template/template_back_office/css/flexslider.css" media="screen">
+	<link rel="stylesheet" href="https://portailweb.universita.corsica/styles/nyroModal.css" type="text/css" media="screen">
+
+
+
+	<script type="text/javascript" src="https://portailweb.universita.corsica/template/template_back_office/js/jquery-migrate-1.4.1.min.js"></script>
+	<script type="text/javascript" src="https://portailweb.universita.corsica/template/template_back_office/js/jquery.flexslider-min.js"></script>
+	<script type="text/javascript" src="https://portailweb.universita.corsica/template/template_back_office/js/app.js"></script>
+
+
+
+
+
+
+						
+
+     
+</div><div></div>
+<script>
+window.onClickLiens = function (url) {
+  if (url) window.open(url, "_blank");
+  return false;
+};
+window.suppression = function () {
+  return false;
+};
+window.dragUnLock = window.dragUnLock || function () {
+  return false;
+};
+window.isOverflown = window.isOverflown || function (el) {
+  return el && (el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth);
+};
+</script>
+<script src="portal.js"></script>
+</body></html>

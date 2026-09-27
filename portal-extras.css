@@ -1,0 +1,174 @@
+/* Transitions / interactions — alignées sur portailweb.universita.corsica */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Tuiles outils */
+.tousmesoutils_appli {
+  transition: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease,
+    transform 0.25s ease, box-shadow 0.35s ease !important;
+  cursor: pointer;
+}
+.tousmesoutils_appli:hover {
+  background-color: #ff5522 !important;
+  color: #fff !important;
+  border-color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(255, 85, 34, 0.28);
+}
+.tousmesoutils_appli:hover i,
+.tousmesoutils_appli:hover span {
+  color: #fff !important;
+  transition: color 0.35s ease;
+}
+.tousmesoutils_appli i {
+  transition: color 0.35s ease, transform 0.35s ease;
+}
+.tousmesoutils_appli:hover i {
+  transform: scale(1.06);
+}
+
+/* Sous-menus déroulants (CROUS, Prévention, EDT…) */
+[id^="deroulant_"] .bouton_deroulant {
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.35s ease;
+}
+[id^="deroulant_"] .bouton_deroulant .btn_partage {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+[id^="deroulant_"] .bouton_deroulant.show_bouton_deroulant .btn_partage.show {
+  animation: fadeInLeft 0.45s ease both;
+}
+[id^="deroulant_"] .tousmesoutils_appli .fa-angle-down {
+  transition: transform 0.35s ease;
+  display: inline-block;
+}
+[id^="deroulant_"].open .tousmesoutils_appli .fa-angle-down,
+[id^="deroulant_"] .tousmesoutils_appli.is-open .fa-angle-down {
+  transform: rotate(180deg);
+}
+
+/* Favoris (pictos) */
+#outils_picto .picto {
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+}
+#outils_picto .picto:hover {
+  transform: translateY(-3px);
+}
+#outils_picto .picto i.fal,
+#outils_picto .picto i.fas {
+  transition: color 0.25s ease, transform 0.25s ease;
+  color: #ff5522;
+}
+#outils_picto .picto:hover i.fal,
+#outils_picto .picto:hover i.fas:not(.deletIco) {
+  transform: scale(1.1);
+}
+#outils_picto .picto .deletIco {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  color: #999;
+}
+#outils_picto .picto:hover .deletIco {
+  opacity: 1;
+}
+
+/* Boutons actions favoris */
+.outils_btn .btn_tous,
+.outils_btn a.btn {
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease,
+    box-shadow 0.3s ease !important;
+}
+.outils_btn .btn_tous:hover,
+.outils_btn a.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* Menu principal (MES OUTILS…) */
+.navmenugeneral a,
+.menugeneral_item,
+header .navigation ul.niv1 > li > a {
+  transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease !important;
+}
+header .navigation ul.niv1 > li > a:hover {
+  opacity: 0.92;
+}
+
+/* Top header */
+header .top_header a {
+  transition: color 0.2s linear;
+}
+header .bottom_header a.logo img {
+  transition: transform 0.3s ease;
+}
+header .bottom_header a.logo:hover img {
+  transform: scale(1.03);
+}
+
+/* Bouton déconnexion flottant */
+#boutonconnexion {
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.25s ease,
+    box-shadow 0.3s ease !important;
+}
+#boutonconnexion:hover {
+  background-color: #ff5522 !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 85, 34, 0.35);
+}
+
+/* Liens tableau de bord / RGPD */
+.tdbcol a,
+.protection a {
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+.tdbcol a:hover {
+  opacity: 0.8;
+}
+
+/* Popup favoris EDT */
+.popuptext {
+  transition: opacity 0.25s ease;
+  animation: fadeIn 0.3s ease both;
+}
+
+/* Barre de progression / search */
+.search_form {
+  transition: height 0.35s ease;
+  overflow: hidden;
+}
+#progress-bar {
+  transition: width 0.4s ease;
+}
+
+/* Apparition douce des sections */
+.tousmesoutils_section,
+.mes_outils {
+  animation: sectionFade 0.55s ease both;
+}
+.tousmesoutils_section:nth-of-type(2) { animation-delay: 0.05s; }
+.tousmesoutils_section:nth-of-type(3) { animation-delay: 0.1s; }
+.tousmesoutils_section:nth-of-type(4) { animation-delay: 0.15s; }
+
+@keyframes sectionFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Badge notif */
+.badge {
+  transition: transform 0.25s ease;
+}
+.tousmesoutils_appli:hover .badge {
+  transform: scale(1.1);
+}
