@@ -104,5 +104,38 @@ window.CELCAT_EVENTS = [
   { start:"2026-10-16T08:30:00", end:"2026-10-16T10:00:00", title:"UE3-Techniques de Calculs 1", room:"CONRAD 002", staff:"MBOUNA, Dieudonné", group:"L1ST", cat:"Cours", className:"cat-orange" },
   { start:"2026-10-16T10:15:00", end:"2026-10-16T11:45:00", title:"UE3-Techniques de Calculs 1", room:"CONRAD 002", staff:"MBOUNA, Dieudonné", group:"L1ST", cat:"Cours", className:"cat-orange" },
   { start:"2026-10-16T13:30:00", end:"2026-10-16T15:00:00", title:"1LST63-Soutien de Chimie", room:"CONRAD 002", staff:"PAOLINI, JULIEN", group:"L1ST", cat:"TD", className:"cat-blue" },
-  { start:"2026-10-16T15:15:00", end:"2026-10-16T19:00:00", title:"1LST63-Soutien de Chimie", room:"CONRAD 002", staff:"PAOLINI, JULIEN", group:"L1ST", cat:"TD", className:"cat-blue" }
+  { start:"2026-10-16T15:15:00", end:"2026-10-16T19:00:00", title:"1LST63-Soutien de Chimie", room:"CONRAD 002", staff:"PAOLINI, JULIEN", group:"L1ST", cat:"TD", className:"cat-blue" },
+
+  // ——— Semaine 19–24 oct. 2026 (identique à 12–17) ———
+  // Lundi 19
+  { start:"2026-10-19T08:30:00", end:"2026-10-19T10:00:00", title:"UE2-Physique 1", room:"CONRAD 002", staff:"LUCCHETTI, Francois Marie", group:"L1ST", cat:"TD", className:"cat-blue" },
+  { start:"2026-10-19T10:15:00", end:"2026-10-19T11:45:00", title:"UE2-Physique 1", room:"CONRAD 002", staff:"LUCCHETTI, Francois Marie", group:"L1ST", cat:"TD", className:"cat-blue" },
+  { start:"2026-10-19T13:30:00", end:"2026-10-19T15:00:00", title:"UE1-Introduction à l'Algèbre et à l'Analyse", room:"CONRAD 002", staff:"CAGNARD, BENOIT", group:"L1ST", cat:"Cours", className:"cat-orange" },
+  { start:"2026-10-19T15:15:00", end:"2026-10-19T19:00:00", title:"UE1-Introduction à l'Algèbre et à l'Analyse", room:"CONRAD 002", staff:"CAGNARD, BENOIT", group:"L1ST", cat:"TD", className:"cat-blue" },
+
+  // Mardi 20
+  { start:"2026-10-20T08:30:00", end:"2026-10-20T10:00:00", title:"UE5-Pensée Informatique et Algorithmique", room:"CONRAD 002", staff:"DELHOM, MARIELLE", group:"L1ST", cat:"Cours", className:"cat-orange" },
+  { start:"2026-10-20T10:15:00", end:"2026-10-20T11:45:00", title:"UE5-Pensée Informatique et Algorithmique", room:"CONRAD 002", staff:"DELHOM, MARIELLE", group:"L1ST", cat:"TD", className:"cat-blue" },
+  { start:"2026-10-20T13:30:00", end:"2026-10-20T15:00:00", title:"UE5-Pensée Informatique et Algorithmique", room:"CONRAD 002", staff:"DELHOM, MARIELLE", group:"L1ST", cat:"TD", className:"cat-blue" },
+  { start:"2026-10-20T15:15:00", end:"2026-10-20T19:00:00", title:"UE5-Pensée Informatique et Algorithmique", room:"CONRAD 002", staff:"DELHOM, MARIELLE", group:"L1ST", cat:"TD", className:"cat-blue" },
+
+  // Mercredi 21
+  { start:"2026-10-21T08:30:00", end:"2026-10-21T10:00:00", title:"1LST61-Soutien de Mathématiques", room:"CONRAD 002", staff:"MBOUNA, Dieudonné", group:"L1ST", cat:"TD", className:"cat-blue" },
+  { start:"2026-10-21T10:15:00", end:"2026-10-21T11:45:00", title:"1LST61-Soutien de Mathématiques", room:"CONRAD 002", staff:"MBOUNA, Dieudonné", group:"L1ST", cat:"TD", className:"cat-blue" },
+  { start:"2026-10-21T13:30:00", end:"2026-10-21T15:00:00", title:"1LST62-Soutien de Physique", room:"CONRAD 002", staff:"MUSELLI, MARC", group:"L1ST", cat:"TD", className:"cat-blue" },
+  { start:"2026-10-21T15:15:00", end:"2026-10-21T16:15:00", title:"1LST62-Soutien de Physique", room:"CONRAD 002", staff:"MUSELLI, MARC", group:"L1ST", cat:"TD", className:"cat-blue" },
+  { start:"2026-10-21T16:30:00", end:"2026-10-21T19:00:00", title:"1LST73-Anglais Fondamental", room:"CONRAD 105", staff:"MATTEI, Frédérique", group:"L1ST-G5 ANGLAIS", cat:"TD", className:"cat-blue" },
+  { start:"2026-10-21T16:30:00", end:"2026-10-21T19:00:00", title:"1LDARK5-Anglais Fondamental", room:"CONRAD 104", staff:"LUCIANO CASANOVA, Abigail", group:"L1ST-G4 ANGLAIS", cat:"TD", className:"cat-blue" },
+
+  // Jeudi 22
+  { start:"2026-10-22T08:30:00", end:"2026-10-22T10:00:00", title:"UE4-Atomistique", room:"CONRAD 002", staff:"PAOLI, MATHIEU", group:"L1ST", cat:"Cours", className:"cat-orange" },
+  { start:"2026-10-22T10:15:00", end:"2026-10-22T11:45:00", title:"UE4-Atomistique", room:"CONRAD 002", staff:"PAOLI, MATHIEU", group:"L1ST", cat:"TD", className:"cat-blue" },
+  { start:"2026-10-22T13:30:00", end:"2026-10-22T15:00:00", title:"UE1-Introduction à l'Algèbre et à l'Analyse", room:"CONRAD 002", staff:"CAGNARD, BENOIT", group:"L1ST", cat:"Cours", className:"cat-orange" },
+  { start:"2026-10-22T15:15:00", end:"2026-10-22T19:00:00", title:"UE1-Introduction à l'Algèbre et à l'Analyse", room:"CONRAD 002", staff:"CAGNARD, BENOIT", group:"L1ST", cat:"TD", className:"cat-blue" },
+
+  // Vendredi 23
+  { start:"2026-10-23T08:30:00", end:"2026-10-23T10:00:00", title:"UE3-Techniques de Calculs 1", room:"CONRAD 002", staff:"MBOUNA, Dieudonné", group:"L1ST", cat:"Cours", className:"cat-orange" },
+  { start:"2026-10-23T10:15:00", end:"2026-10-23T11:45:00", title:"UE3-Techniques de Calculs 1", room:"CONRAD 002", staff:"MBOUNA, Dieudonné", group:"L1ST", cat:"Cours", className:"cat-orange" },
+  { start:"2026-10-23T13:30:00", end:"2026-10-23T15:00:00", title:"1LST63-Soutien de Chimie", room:"CONRAD 002", staff:"PAOLINI, JULIEN", group:"L1ST", cat:"TD", className:"cat-blue" },
+  { start:"2026-10-23T15:15:00", end:"2026-10-23T19:00:00", title:"1LST63-Soutien de Chimie", room:"CONRAD 002", staff:"PAOLINI, JULIEN", group:"L1ST", cat:"TD", className:"cat-blue" }
 ];
